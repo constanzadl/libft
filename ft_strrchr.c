@@ -15,10 +15,10 @@ char	*ft_strrchr(const char *s, int c)
 		}
 		i++;
 	}
-	if (r)
+	if (!c)
+		return ((char *)s + i);
+	if (c && (r != 0 || *s == c))
 		return ((char *)s + r);
-	if (c == '\0')
-		return ((char *)s);
 	return(NULL);
 }
 
