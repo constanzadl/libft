@@ -6,7 +6,7 @@
 /*   By: cduarte- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/20 13:27:38 by cduarte-          #+#    #+#             */
-/*   Updated: 2020/02/20 16:27:49 by cduarte-         ###   ########.fr       */
+/*   Updated: 2020/02/20 16:46:46 by cduarte-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,8 @@ static char		*make_words(char const *str, char c)
 	int		k;
 
 	k = 0;
+	if (!*str)
+		return (NULL);
 	while (str[k] != c && str[k] != '\0')
 		k++;
 	word = ft_strnew(k);
@@ -51,6 +53,8 @@ char			**ft_strsplit(char const *s, char c)
 	int		i;
 
 	i = 0;
+	if (!*s)
+		return (NULL);
 	counter = word_counter(s, c);
 	words = (char**)malloc(sizeof(char *) * (counter + 1));
 	if (words == NULL)
@@ -66,5 +70,6 @@ char			**ft_strsplit(char const *s, char c)
 			s++;
 		i++;
 	}
+	words[i] = 0;
 	return (words);
 }
