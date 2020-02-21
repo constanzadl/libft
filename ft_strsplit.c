@@ -3,82 +3,68 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strsplit.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bekim <marvin@42.fr>                       +#+  +:+       +#+        */
+/*   By: cduarte- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/02/18 20:13:57 by bekim             #+#    #+#             */
-/*   Updated: 2020/02/19 15:57:37 by bekim            ###   ########.fr       */
+/*   Created: 2020/02/20 13:27:38 by cduarte-          #+#    #+#             */
+/*   Updated: 2020/02/20 16:27:49 by cduarte-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-static int	count_strings(char const *str, char c)
+static int		word_counter(char const *str, char c)
 {
-	int		index;
-	int		count;
+	int result;
 
-	index = 0;
-	count = 0;
+	result = 0;
 	while (*str)
 	{
 		while (*str == c)
 			str++;
 		if (*str)
-			count++;
+			result++;
 		while (*str != c && *str)
 			str++;
 	}
-	return (count);
+	return (result);
 }
 
-static int	str_len(char const *str, char c)
-{
-	int		size;
-
-	size = 0;
-	while (*str != c && *str)
-	{
-		size++;
-		str++;
-	}
-	return (size);
-}
-
-static char	*create_word(char const *str, int len)
+static char		*make_words(char const *str, char c)
 {
 	char	*word;
+	int		k;
 
-	word = ft_strnew(len);
+	k = 0;
+	while (str[k] != c && str[k] != '\0')
+		k++;
+	word = ft_strnew(k);
 	if (word == NULL)
 		return (NULL);
-	ft_strncpy(word, str, len);
+	ft_strncpy(word, str, k);
 	return (word);
 }
 
-char		**ft_strsplit(char const *s, char c)
+char			**ft_strsplit(char const *s, char c)
 {
-	char	**ret;
-	int		size;
-	int		index;
-	char	*word;
+	char	**words;
+	int		counter;
+	int		i;
 
-	index = 0;
-	size = count_strings(s, c);
-	ret = (char **)malloc(sizeof(char*) * (size + 1));
-	if (ret == NULL)
+	i = 0;
+	counter = word_counter(s, c);
+	words = (char**)malloc(sizeof(char *) * (counter + 1));
+	if (words == NULL)
 		return (NULL);
-	while (index < size)
+	while (i < counter)
 	{
 		while (*s == c)
 			s++;
-		word = create_word(s, str_len(s, c));
-		if (word == NULL)
+		words[i] = make_words(s, c);
+		if (words[i] == NULL)
 			return (NULL);
-		ret[index] = word;
 		while (*s != c && *s)
 			s++;
-		index++;
+		i++;
 	}
-	ret[index] = 0;
-	return (ret);
+	return (words);
 }
