@@ -57,6 +57,15 @@ ft_strsub.c \
 ft_strtrim.c \
 ft_tolower.c \
 ft_toupper.c \
+ft_lstnew.c \
+ft_lstdelone.c \
+ft_lstdel.c \
+ft_lstadd.c \
+ft_lstadd_back.c \
+ft_lstiter.c \
+ft_lstsize.c \
+ft_lstmap.c \
+ft_lstadd_new.c \
 
 
 OBJS = $(patsubst %.c,%.o,$(SRCS))
