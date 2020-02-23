@@ -66,6 +66,7 @@ ft_lstiter.c \
 ft_lstsize.c \
 ft_lstmap.c \
 ft_lstadd_new.c \
+ft_lstsplit.c
 
 
 OBJS = $(patsubst %.c,%.o,$(SRCS))
@@ -79,10 +80,20 @@ $(NAME):
 
 clean:
 	@rm -rf $(OBJS)
+	@rm -rf a.out*
 
 fclean: clean
 	@rm -rf $(NAME)
 
 re: fclean all
 
-.PHONY: make all clean fclean re
+sanitized:
+	#@echo 'Removing other executables...'
+	#@rm -rf $(NAME)*
+	# @$(CC) $(CFLAGS) -g $(addprefix srcs/,$(SRCS)) $(LIBFT) -I $(INCLUDES) -o $(NAME)_sanitize -fsanitize=address
+	@$(CC) $(FLAGS) -g -I $(HEADER) *.c -fsanitize=address
+	#@echo '$(NAME)_sanitize executable created'
+	@#echo 'Running sanitized executable...'
+	@#echo ''
+	@#echo './$(NAME)_sanitize'
+	@#./$(NAME)_sanitize
